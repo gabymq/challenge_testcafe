@@ -1,6 +1,6 @@
 import { Selector } from 'testcafe'
 
-class LoginPage {
+export class LoginPage {
     constructor() {
         this.usernameField = Selector('#user-name')
         this.passwordField = Selector('#password')
@@ -9,5 +9,3 @@ class LoginPage {
         this.labelProduct = Selector('.product_label')
     }
 }
-
-export default new LoginPage()
