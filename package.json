@@ -1,0 +1,11 @@
+{
+  "name": "challenge_testcafe",
+  "version": "1.0.0",
+  "description": "challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "testcafe chrome page_model/test/"
+  },
+  "author": "Gabriela Moreno Quintana",
+  "license": "ISC"
+}
