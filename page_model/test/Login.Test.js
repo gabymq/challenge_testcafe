@@ -3,6 +3,7 @@ import { ClientFunction } from 'testcafe'
 import { InventoryPage } from '../pages/Inventory_Page'
 import { CartPage } from '../pages/Cart_Page';
 import { CheckOutStepOne } from '../pages/Checkout_StepOne';
+import { inventoryItems } from '../data/Inventory_Items';
 
 let inventoryPage = null;
 let loginPage = null;
@@ -17,7 +18,7 @@ fixture('Login testing')
         cartPage = new CartPage()
         checkOutStepOne = new CheckOutStepOne()
     })
-
+/*
 test('Login with a valid user', async t => {
     await t.typeText(loginPage.usernameField, 'standard_user')
     await t.typeText(loginPage.passwordField, 'secret_sauce')
@@ -133,6 +134,42 @@ test('Fill user\'s information', async t => {
     const getWindowLocation = ClientFunction(() => window.location.href)
 
     await t.expect(await getWindowLocation()).eql("https://www.saucedemo.com/inventory.html")
+    
+    await t.click(inventoryPage.shoppingCartLink)
+
+    await t.expect(await getWindowLocation()).eql("https://www.saucedemo.com/cart.html")
+
+    await t.click(cartPage.checkoutButton)
+
+    await t.expect(await getWindowLocation()).eql("https://www.saucedemo.com/checkout-step-one.html")
+
+    await t.typeText(checkOutStepOne.firstNameField, 'Sauceda')
+    await t.typeText(checkOutStepOne.lastNameField, 'Vargas')
+    await t.typeText(checkOutStepOne.postalCodeField, '90210')
+
+
+    await t.click(checkOutStepOne.continuoButton)
+
+
+    await t.expect(await getWindowLocation()).eql("https://www.saucedemo.com/checkout-step-two.html")
+    
+})
+*/
+test('Final order items', async t => {
+    await t.typeText(loginPage.usernameField, 'standard_user')
+    await t.typeText(loginPage.passwordField, 'secret_sauce')
+    await t.click(loginPage.loginButton)
+
+    const getWindowLocation = ClientFunction(() => window.location.href)
+
+    await t.expect(await getWindowLocation()).eql("https://www.saucedemo.com/inventory.html")
+
+    inventoryItems.forEach(async item => {
+        await t.click(inventoryPage.getInventoryButton(item.id))
+    })
+
+    await t.expect(inventoryPage.shoppingCartLink.find(".shopping_cart_badge").innerText).eql(`${inventoryItems.length}`)
+
     
     await t.click(inventoryPage.shoppingCartLink)
 
