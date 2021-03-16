@@ -4,11 +4,13 @@ import { InventoryPage } from '../pages/Inventory_Page'
 import { CartPage } from '../pages/Cart_Page';
 import { CheckOutStepOne } from '../pages/Checkout_StepOne';
 import { inventoryItems } from '../data/Inventory_Items';
+import {CheckoutStepTwo} from '../pages/Checkout_StepTwo'
 
 let inventoryPage = null;
 let loginPage = null;
 let cartPage = null;
 let checkOutStepOne = null;
+let checkOutStepTwo = null;
 
 fixture('Login testing')
     .page`https://www.saucedemo.com/`
@@ -17,8 +19,9 @@ fixture('Login testing')
         loginPage = new LoginPage()
         cartPage = new CartPage()
         checkOutStepOne = new CheckOutStepOne()
+        checkOutStepTwo = new CheckoutStepTwo()
     })
-/*
+
 test('Login with a valid user', async t => {
     await t.typeText(loginPage.usernameField, 'standard_user')
     await t.typeText(loginPage.passwordField, 'secret_sauce')
@@ -154,7 +157,7 @@ test('Fill user\'s information', async t => {
     await t.expect(await getWindowLocation()).eql("https://www.saucedemo.com/checkout-step-two.html")
     
 })
-*/
+
 test('Final order items', async t => {
     await t.typeText(loginPage.usernameField, 'standard_user')
     await t.typeText(loginPage.passwordField, 'secret_sauce')
@@ -188,5 +191,13 @@ test('Final order items', async t => {
 
 
     await t.expect(await getWindowLocation()).eql("https://www.saucedemo.com/checkout-step-two.html")
+
+    inventoryItems.forEach(async (item, idx) => {
+        const itemText = await checkOutStepTwo.getTextItem(idx + 1);
+
+        await t.expect(item.name).eql(itemText.name)
+        await t.expect(item.description).eql(itemText.description)
+        await t.expect(item.price).eql(itemText.price)
+    })
     
 })
