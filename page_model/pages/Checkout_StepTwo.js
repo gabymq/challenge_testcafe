@@ -7,6 +7,7 @@ export class CheckoutStepTwo extends AuthSelectorPage{
     super()
 
         this.inventoryItemsCartList = Selector('.cart_list').find('.cart_item')
+        this.finishButton = Selector('.btn_action.cart_button')
 }
     async getTextItem(cartItem){
         const parentSelector = `.cart_list .cart_item:nth-child(${cartItem+2})`;
