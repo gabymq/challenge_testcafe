@@ -204,7 +204,7 @@ test('Final order items', async t => {
 
 })
 
-test.only('Complete purchase', async t => {
+test('Complete purchase', async t => {
 
     await t.typeText(loginPage.usernameField, 'standard_user')
     await t.typeText(loginPage.passwordField, 'secret_sauce')
